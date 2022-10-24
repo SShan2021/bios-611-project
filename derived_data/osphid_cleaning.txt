@@ -1,0 +1,2 @@
+Dimensions of original OSHPDID Dataset: 24368
+After removing statewide data we had 24292 rows.

@@ -1,0 +1,362 @@
+{
+  "accrual_periodicity": "quarterly",
+  "additional_limitations": "",
+  "citation": "",
+  "contact_email": "opendata@cdph.ca.gov",
+  "data_collection_tool": "",
+  "data_license": "Terms of Use",
+  "de_identification_method": "",
+  "description": "The California Department of Public Health (CDPH), Center for Health Care Quality, Licensing and Certification (L&C) Program licenses and certifies more than 30 types of healthcare facilities. The Electronic Licensing Management System (ELMS) is a CDPH data system created to manage state licensing-related data and enforcement actions.\r\n\r\nThis dataset provides a California healthcare facilities interdepartmental crosswalk using the Department of Health Care Access and Information (HCAI) assigned licensed facility identification numbers linked with matched California Department of Public Health (CDPH), Licensing and Certification facility lists based on license number housed in the Electronic Licensing Management System (ELMS) and/or the CMS Certification Number (CCN) from the Federal Automated Survey Process Environment (ASPEN) databases. This is not a comprehensive matched list, facility identification numbers that did not match are also included from both the HCAI and CDPH lists. Facility Status or Facility Level designations may explain some HCAI non-matches, for additional information contact HCAI directly. Please contact CDPH directly for more information regarding un-matched facility identifiers that do not have corresponding OSHPD identifiers.",
+  "geo_coverage": "California",
+  "geographic_granularity": "location point",
+  "keywords": [
+    "Branch",
+    "Consolidated",
+    "Cross Walk",
+    "Crosswalk",
+    "Distinct Part",
+    "HHA",
+    "Health Facilities",
+    "Healthcare Facilities",
+    "Hospitals",
+    "Nursing Homes",
+    "SNF",
+    "Skilled Nursing",
+    "Skilled Nursing Homes",
+    "clinic",
+    "facility",
+    "facility list",
+    "home health",
+    "hospice",
+    "licensed facility",
+    "parent",
+    "suspense",
+    "xwalk"
+  ],
+  "limitations": "Limitations",
+  "name": "licensed-facility-crosswalk",
+  "program_web_page": "CDPH: https://www.cdph.ca.gov/Programs/CHCQ/LCP/Pages/HealthCareFacilities.aspx and HCAI: https://hcai.ca.gov/facility-finder/",
+  "related_resources": "",
+  "resources": [
+    {
+      "description": "This dataset provides a current 1 to 1 to 1 healthcare facility crosswalk between the Department of Health Care Access and Information (HCAI) assigned license numbers and the California Department of Public Health (CDPH), Licensing and Certification facility lists based on the assigned license number housed within the Electronic Licensing Management System (ELMS) and/or the CMS Certification Number (CCN) from the Federal Automated Survey Process Environment (ASPEN) databases. Data source is updated quarterly.",
+      "format": "XLSX",
+      "hash": "0b907aa0dbb3e3d92fc7c55b2174b0dd",
+      "name": "elms-aspen-oshpd-licensed-and-certified-healthcare-facility-crosswalk",
+      "path": "elms-aspen-oshpd-licensed-and-certified-healthcare-facility-crosswalk.xlsx",
+      "schema": {
+        "fields": [
+          {
+            "description": "LICENSED_CERTIFIED will identify if a facility has applied for state licensing or federal certification. See Lookup Table.\r\n",
+            "name": "LICENSED_CERTIFIED",
+            "type": "string"
+          },
+          {
+            "description": "FACID is a 9-digit identifier. It is the primary key from the FACILITY table used to track facility information for all facilities stored in the Electronic Licensing Management System (ELMS) for CDPH Center of Healthcare Quality, Licensing and Certification Program.  \r\n",
+            "name": "ELMS_FACID",
+            "type": "string"
+          },
+          {
+            "description": "LICENSED_CERTIFIED will identify if a facility has applied for state licensing or federal certification. See Lookup Table.\r\n",
+            "name": "LICENSE_NUMBER",
+            "type": "string"
+          },
+          {
+            "name": "LICENSE_STATUS_DESCRIPTION",
+            "type": "string"
+          },
+          {
+            "description": "A unique five-digit identifier assigned to each facility by the Department of Health Care Access and Information (HCAI). The first digit indicates the type of facility. The last four-digits are unique within each type.\r\n\r\n",
+            "name": "PERM_ID",
+            "type": "string"
+          },
+          {
+            "description": "A unique nine-digit identifier assigned to each facility by the Department of Health Care Access and Information (HCAI). The first three digits indicate the type of facility, the next two digits indicate the county in which the facility is located. The last four-digits are unique within each county. If OSHPD ID is blank, facility could be excluded or not created in HCAI.\r\n",
+            "name": "OSHPD_ID",
+            "type": "string"
+          },
+          {
+            "description": "ASPEN_FACID is a state assigned identifier used to track facilities in the CDPH's  federal data system: Automated Survey Processing Environment (ASPEN). \r\n",
+            "name": "ASPEN_FACID",
+            "type": "string"
+          },
+          {
+            "description": "CCN (CMS Certification Number) is a 6-digit facility identifier used by CMS to verify that a provider has been Medicare certified and for what type of services.  In order to avoid confusion with the National Provider Identifier (NPI), the Medicare/Medicaid Provider Number (also known as the OSCAR Provider Number, Medicare Identification Number or Provider Number) had been renamed the CMS Certification Number (CCN).  The first two digits are the numeric state code. NOTE: The CCN for ambulatory surgical centers is a 10-digit alphanumeric combination (######, ##A####, ##C#######).   Note that nine of the facilities operate under the certification of a “parent” facility.  Facilities in the same parent-child groups operate under the same CMS Certification Number (CCN), and the “child” facility’s surveys are attributed to the parent facility (based on the federal facility ID).  \r\n",
+            "name": "CCN",
+            "type": "string"
+          },
+          {
+            "description": "\"National Provider Indicator (NPI) is a 10-digit identifier for health care providers and health plans that was mandated by the Health Insurance Portability and Accountability Act of 1996 (HIPPA) for use in electronic transactions. Individuals or organizations apply for NPIs through the CMS National Plan and Provider Enumeration System (NPPES).  Individual NPIs, also known as Type 1 NPIs, are for healthcare providers, such\r\nas dentists. Organizational, or Type 2 NPIs are for use by incorporated  businesses, such group practices and clinics. Organizational NPIs can also be assigned to subparts.  CDPH records one NPI per facility, even if a facility has multiple NPIs. \"\r\n",
+            "name": "NPI",
+            "type": "string"
+          },
+          {
+            "name": "ASPEN_STATUS",
+            "type": "string"
+          },
+          {
+            "description": "FACNAME is the facility name in the FACILITY table in ELMS, obtained from the facility's license application form.\r\n",
+            "name": "FACNAME",
+            "type": "string"
+          },
+          {
+            "description": "Facility Type Name.\r\n",
+            "name": "FAC_TYPE_DESCRIPTION",
+            "type": "string"
+          },
+          {
+            "description": "The facility type roll-up that is used in the Licensing and Certification Fee Development Report and is based on licensure facility types used in the ELMS system. See Lookup table.\r\n",
+            "name": "FAC_FDR",
+            "type": "string"
+          },
+          {
+            "description": "The facility parent/child relationship. See Lookup Table.\r\n",
+            "name": "FAC_FAC_RELATIONSHIP",
+            "type": "string"
+          },
+          {
+            "description": "ELMS PARENT FACID is a nine-digit identifier. It is the primary key from the FACILITY table used to track facility information for all facilities stored in the Electronic Licensing Management System (ELMS) for CDPH Center of Healthcare Quality, Licensing and Certification Program.  This PARENT ELMS FACID only available when there is a parent/child relationship = FAC_FAC_RELATIONSHIP.\r\n",
+            "name": "ELMS_PARENT_FACID",
+            "type": "number"
+          }
+        ]
+      },
+      "sources": [
+        {
+          "path": "https://data.chhs.ca.gov/dataset/e89100fd-1f1d-4a37-8205-d588aa42e5a1/resource/e083f267-43bf-427b-9ee3-f53faaff5d7e/download/odp_elms_aspen_oshpd_cw_mar2022.xlsx",
+          "title": " ELMS-ASPEN-OSHPD - Licensed and Certified Healthcare Facility Crosswalk"
+        }
+      ],
+      "title": " ELMS-ASPEN-OSHPD - Licensed and Certified Healthcare Facility Crosswalk"
+    },
+    {
+      "description": "This dataset provides a 1 to many healthcare facility crosswalk between the California Department of Public Health (CDPH), Electronic Licensing Management System (ELMS) database and the Federal Automated Survey Process Environment (ASPEN) database using the facility ID and license number to the CMS Certification Number (CCN). ASPEN historical records included. ",
+      "format": "XLS",
+      "hash": "10deb3bc2eab0ffc317d9d4a0713d092",
+      "name": "elms-aspen-licensed-and-certified-healthcare-facility-crosswalk",
+      "path": "elms-aspen-licensed-and-certified-healthcare-facility-crosswalk.xls",
+      "schema": {
+        "fields": [
+          {
+            "description": "An indicator of how many matches between ELMS FACID and ASPEN FACID within the ELMS_ASPEN_CW or how many matches between ELMS FACID and OSHPD_ID within the ELMS_OSHPD_CW. See lookup table.\r\n",
+            "name": "CROSSWALK_NOTE",
+            "type": "string"
+          },
+          {
+            "description": "Sequential number derived by age. Within the ELMS_ASPEN_CW; one represent the most recent facility, two represents the historical facilities. Within the ELMS_OSHPD_CW;  one represents the most recent facility, two represents the second most recent and so forth. A sequential number with \"C\" within the ELMS_OSHPD_CW means the child facility does not have a separate OSHPD_ID but matches to the parent facility OSHPD_ID.\r\n",
+            "name": "AGE",
+            "type": "number"
+          },
+          {
+            "description": "FACID is a 9-digit identifier. It is the primary key from the FACILITY table used to track facility information for all facilities stored in the Electronic Licensing Management System (ELMS) for CDPH Center of Healthcare Quality, Licensing and Certification Program.  \r\n",
+            "name": "ELMS_FACID",
+            "type": "string"
+          },
+          {
+            "description": "License number is a nine-digit identifier. A CDPH facility/provider license number identifies that a health care facility/provider operates within state statute/regulations and can legally do business in California. \r\n",
+            "name": "LICENSE_NUMBER",
+            "type": "string"
+          },
+          {
+            "name": "LICENSE_STATUS_DESCRIPTION",
+            "type": "string"
+          },
+          {
+            "description": "ASPEN_FACID is a state assigned identifier used to track facilities in the CDPH's  federal data system: Automated Survey Processing Environment (ASPEN). \r\n",
+            "name": "ASPEN_FACID",
+            "type": "string"
+          },
+          {
+            "description": "CCN (CMS Certification Number) is a 6-digit facility identifier used by CMS to verify that a provider has been Medicare certified and for what type of services.  In order to avoid confusion with the National Provider Identifier (NPI), the Medicare/Medicaid Provider Number (also known as the OSCAR Provider Number, Medicare Identification Number or Provider Number) had been renamed the CMS Certification Number (CCN).  The first two digits are the numeric state code. NOTE: The CCN for ambulatory surgical centers is a 10-digit alphanumeric combination (######, ##A####, ##C#######).   Note that nine of the facilities operate under the certification of a “parent” facility.  Facilities in the same parent-child groups operate under the same CMS Certification Number (CCN), and the “child” facility’s surveys are attributed to the parent facility (based on the federal facility ID).  \r\n",
+            "name": "CCN",
+            "type": "string"
+          },
+          {
+            "description": "\"National Provider Indicator (NPI) is a 10-digit identifier for health care providers and health plans that was mandated by the Health Insurance Portability and Accountability Act of 1996 (HIPPA) for use in electronic transactions. Individuals or organizations apply for NPIs through the CMS National Plan and Provider Enumeration System (NPPES).  Individual NPIs, also known as Type 1 NPIs, are for healthcare providers, such\r\nas dentists. Organizational, or Type 2 NPIs are for use by incorporated  businesses, such group practices and clinics. Organizational NPIs can also be assigned to subparts.  CDPH records one NPI per facility, even if a facility has multiple NPIs. \"\r\n",
+            "name": "NPI",
+            "type": "string"
+          },
+          {
+            "name": "ASPEN_STATUS",
+            "type": "string"
+          },
+          {
+            "description": "FACNAME is the facility name in the FACILITY table in ELMS, obtained from the facility's license application form.\r\n",
+            "name": "FACNAME",
+            "type": "string"
+          },
+          {
+            "description": "Facility Type Name.\r\n",
+            "name": "FAC_TYPE_DESCRIPTION",
+            "type": "string"
+          },
+          {
+            "description": "The facility type roll-up that is used in the Licensing and Certification Fee Development Report and is based on licensure facility types used in the ELMS system. See Lookup table.\r\n",
+            "name": "FAC_FDR",
+            "type": "string"
+          },
+          {
+            "description": "The facility parent/child relationship. See Lookup Table.\r\n",
+            "name": "FAC_FAC_RELATIONSHIP",
+            "type": "string"
+          },
+          {
+            "description": "ELMS PARENT FACID is a nine-digit identifier. It is the primary key from the FACILITY table used to track facility information for all facilities stored in the Electronic Licensing Management System (ELMS) for CDPH Center of Healthcare Quality, Licensing and Certification Program.  This PARENT ELMS FACID only available when there is a parent/child relationship = FAC_FAC_RELATIONSHIP.\r\n",
+            "name": "ELMS_PARENT_FACID",
+            "type": "string"
+          }
+        ]
+      },
+      "sources": [
+        {
+          "path": "https://data.chhs.ca.gov/dataset/e89100fd-1f1d-4a37-8205-d588aa42e5a1/resource/d90d1858-fb94-45cd-ba62-eb8ff997384b/download/odp_elms_aspen_cw_mar2022.xlsx",
+          "title": "ELMS-ASPEN - Licensed and Certified Healthcare Facility Crosswalk"
+        }
+      ],
+      "title": "ELMS-ASPEN - Licensed and Certified Healthcare Facility Crosswalk"
+    },
+    {
+      "description": "This dataset provides a 1 to many California healthcare facility crosswalk between the Department of Health Care Access and Information (HCAI) licensed facility identification numbers and the California Department of Public Health (CDPH), Electronic Licensing Management System (ELMS) facility ID and license number. HCAI historical records included. ",
+      "format": "XLSX",
+      "hash": "2186907ef0d235573ee9db63acd25c60",
+      "name": "elms-oshpd-licensed-and-certified-healthcare-facility-crosswalk",
+      "path": "https://data.chhs.ca.gov/dataset/e89100fd-1f1d-4a37-8205-d588aa42e5a1/resource/cfde03b7-62ba-4f80-b433-b5e2428ecb10/download/odp_elms_oshpd_cw_apr2021.xlsx",
+      "schema": {
+        "fields": [
+          {
+            "description": "An indicator of how many matches between ELMS FACID and ASPEN FACID within the ELMS_ASPEN_CW or how many matches between ELMS FACID and OSHPD_ID within the ELMS_OSHPD_CW. See lookup table.\r\n",
+            "name": "CROSSWALK_NOTE",
+            "type": "string"
+          },
+          {
+            "description": "Sequential number derived by age. Within the ELMS_ASPEN_CW; one represent the most recent facility, two represents the historical facilities. Within the ELMS_OSHPD_CW;  one represents the most recent facility, two represents the second most recent and so forth. A sequential number with \"C\" within the ELMS_OSHPD_CW means the child facility does not have a separate OSHPD_ID but matches to the parent facility OSHPD_ID.\r\n",
+            "name": "AGE",
+            "type": "string"
+          },
+          {
+            "description": "FACID is a 9-digit identifier. It is the primary key from the FACILITY table used to track facility information for all facilities stored in the Electronic Licensing Management System (ELMS) for CDPH Center of Healthcare Quality, Licensing and Certification Program.  \r\n",
+            "name": "ELMS_FACID",
+            "type": "string"
+          },
+          {
+            "description": "License number is a nine-digit identifier. A CDPH facility/provider license number identifies that a health care facility/provider operates within state statute/regulations and can legally do business in California. \r\n",
+            "name": "LICENSE_NUMBER",
+            "type": "string"
+          },
+          {
+            "name": "LICENSE_STATUS_DESCRIPTION",
+            "type": "string"
+          },
+          {
+            "description": "A unique nine-digit identifier assigned to each facility by the Department of Health Care Access and Information (HCAI). The first three digits indicate the type of facility, the next two digits indicate the county in which the facility is located. The last four-digits are unique within each county. If OSHPD ID is blank, facility could be excluded or not created in HCAI.\r\n",
+            "name": "OSHPD_ID",
+            "type": "string"
+          },
+          {
+            "description": "FACNAME is the facility name in the FACILITY table in ELMS, obtained from the facility's license application form.\r\n",
+            "name": "FACNAME",
+            "type": "string"
+          },
+          {
+            "description": "Facility Type Name.\r\n",
+            "name": "FAC_TYPE_DESCRIPTION",
+            "type": "string"
+          },
+          {
+            "description": "The facility type roll-up that is used in the Licensing and Certification Fee Development Report and is based on licensure facility types used in the ELMS system. See Lookup table.\r\n",
+            "name": "FAC_FDR",
+            "type": "string"
+          },
+          {
+            "description": "The facility parent/child relationship. See Lookup Table.\r\n",
+            "name": "FAC_FAC_RELATIONSHIP",
+            "type": "string"
+          },
+          {
+            "description": "ELMS PARENT FACID is a nine-digit identifier. It is the primary key from the FACILITY table used to track facility information for all facilities stored in the Electronic Licensing Management System (ELMS) for CDPH Center of Healthcare Quality, Licensing and Certification Program.  This PARENT ELMS FACID only available when there is a parent/child relationship = FAC_FAC_RELATIONSHIP.\r\n",
+            "name": "ELMS_PARENT_FACID",
+            "type": "string"
+          }
+        ]
+      },
+      "title": "ELMS-OSHPD - Licensed and Certified Healthcare Facility Crosswalk"
+    },
+    {
+      "description": "Data Dictionary that corresponds with the Licensed and Certified Healthcare Facility Crosswalk datasets.",
+      "format": "XLS",
+      "hash": "dcb822bddf49c25a44eefdbab3927062",
+      "name": "data-dictionary-licensed-and-certified-healthcare-facility-crosswalk",
+      "path": "data-dictionary-licensed-and-certified-healthcare-facility-crosswalk.xls",
+      "schema": {
+        "fields": [
+          {
+            "name": "Name",
+            "type": "string"
+          },
+          {
+            "name": "Description",
+            "type": "string"
+          },
+          {
+            "name": "ELMS_ASPEN_OSHPD_CW",
+            "type": "string"
+          },
+          {
+            "name": "ELMS_OSHPD_CW",
+            "type": "string"
+          },
+          {
+            "name": "ELMS_ASPEN_CW",
+            "type": "string"
+          }
+        ]
+      },
+      "sources": [
+        {
+          "path": "https://data.chhs.ca.gov/dataset/e89100fd-1f1d-4a37-8205-d588aa42e5a1/resource/5da6b920-b646-4324-b86c-3c4b1405fc42/download/odp_elms_aspen_oshpd_cw_data_dictionary_oct2020.xlsx",
+          "title": "Data Dictionary - Licensed and Certified Healthcare Facility Crosswalk"
+        }
+      ],
+      "title": "Data Dictionary - Licensed and Certified Healthcare Facility Crosswalk"
+    },
+    {
+      "description": "Lookup table that corresponds with the Licensed and Certified Healthcare Facility Crosswalk datasets.",
+      "format": "XLS",
+      "hash": "a2967b18168d5b225374389f4ab284ae",
+      "name": "lookup-table-licensed-and-certified-healthcare-facility-crosswalk",
+      "path": "lookup-table-licensed-and-certified-healthcare-facility-crosswalk.xls",
+      "schema": {
+        "fields": [
+          {
+            "name": "VARIABLES",
+            "type": "string"
+          },
+          {
+            "name": "VALUE",
+            "type": "string"
+          },
+          {
+            "name": "REGULATION DESCRIPTION",
+            "type": "string"
+          }
+        ]
+      },
+      "sources": [
+        {
+          "path": "https://data.chhs.ca.gov/dataset/e89100fd-1f1d-4a37-8205-d588aa42e5a1/resource/738f4f21-6d89-4d73-9833-ce6e2c983c02/download/odp_elms_aspen_oshpd_cw_lookup_oct2020.xlsx",
+          "title": "Lookup Table - Licensed and Certified Healthcare Facility Crosswalk "
+        }
+      ],
+      "title": "Lookup Table - Licensed and Certified Healthcare Facility Crosswalk "
+    }
+  ],
+  "secondary_sources": "",
+  "sources": [
+    {
+      "name": "Center for Health Care Quality, Licensing & Certification Program and Department of Health Care Access and Information",
+      "web": " https://www.cdph.ca.gov/programs/chcq/lcp/calhealthfind/Pages/Home.aspx  and https://hcai.ca.gov/facility-finder/"
+    }
+  ],
+  "temporal_coverage": "Updated Quarterly",
+  "title": "Licensed and Certified Healthcare Facility Crosswalk"
+}
