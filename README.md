@@ -32,7 +32,7 @@ docker build . --build-arg linux_user_pwd="$(cat .password)" -t 611
 This will create a docker container. Users using terminal will be able to start an RStudio server by running:
 
 ```
-docker run -v $(pwd):/home/rstudio/work\
+docker run -v "$(pwd)":/home/rstudio/work\
            -p 8787:8787\
            -p 8888:8888\
            -e PASSWORD="$(cat .password)"\
