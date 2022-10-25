@@ -4,6 +4,7 @@
 library(readxl)
 library(tidyverse)
 library(vistime)
+webshot::install_phantomjs()
 
 #set working directory
 #"gear" tab in the bottom right pane of rstudio 
