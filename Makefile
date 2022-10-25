@@ -16,7 +16,15 @@ clean:
 											#if you want to save to a location, gotta make sure
 											#that location exists
 
-derived_data/rand_tidied.csv \
+derived_data/rand_raw.csv\
 derived_data/rand_metadata.csv: .created-dirs code/tidy_rand.R \
 	source_data/Supplemental_Material.xlsx
 		Rscript code/tidy_rand.R
+
+figures/fiscal_year_2019.png: .created-dirs code/tidy_nashp.R \
+	source_data/NASHP_HCT_Data_2022_April.xlsx
+		Rscript code/tidy_nashp.R
+		
+HospitalOutcomesReport_SophieShan.pdf: HospitalOutcomesReport_SophieShan.Rmd \
+ figures/fiscal_year_2019.png
+	Rscript -e "rmarkdown::render('HospitalOutcomesReport_SophieShan.Rmd', output_format='pdf_document')"

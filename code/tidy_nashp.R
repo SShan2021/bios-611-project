@@ -24,11 +24,17 @@ colnames(nashp_raw) <- str_replace_all(colnames(nashp_raw), "[[:space:],#'$?/()-
 
 #check out the most recent year 
 nashp_raw_2019 <- nashp_raw %>%
-  filter(year == "2019") %>%
-  head(50)
+  filter(year == "2019") 
 
-#make a graph of the fiscal_year_beginning and fiscal_year_ending 
-png('figures/fiscal_year_2019.png')
-vistime(nashp_raw_2019, col.event = "ccn",
+nashp_raw_2019_fiscalyear <- nashp_raw %>%
+  filter(year == "2019") %>%
+  group_by(ccn) %>% #among one ccn, I would like 
+  #to get the smallest fiscal year beginning 
+  summarise(fiscal_year_beginning = min(fiscal_year_beginning),
+            fiscal_year_ending = max(fiscal_year_ending)) %>% head(20)
+
+
+f <- vistime(nashp_raw_2019_fiscalyear, col.event = "ccn",
         col.start = "fiscal_year_beginning", col.end = "fiscal_year_ending")
-dev.off()
+k <- plotly::export(f, file="figures/fiscal_year_2019.png")
+

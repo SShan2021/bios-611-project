@@ -1,14 +1,57 @@
-Understanding the Relationship between Relative Price and Hospital Status
+Investigating the Relationship between Uninsured Payer Mix and Relative Cost of Hospital Services
+============================
+Author: Sophie Shan
+----------------------------
+This repository contains an analysis of data from RAND's National Evaluation of Health Care Prices Paid by Private Health Plans (https://www.rand.org/pubs/research_reports/RR4394.html) merged with data from The National Academy for State Health Policy's Hospital Cost Tool (NASHP) (https://d3g6lgu1zfs2l4.cloudfront.net/).
 
-Dataset:
-a.	Dataset from RAND’s National Evaluation of Health Care Prices Paid by Private Health Plans (https://www.rand.org/pubs/research_reports/RR4394.html)
-b.	Describes how much private insurers pay relative to the cost of Medicare (Medicare has a set algorithm for deciding payments, while private insurers negotiate separately with each hospital)
-c.	Includes information on hospital location, hospital system, CMS 5-star rating, relative price for outpatient/inpatient services, etc.
-d.	Has hospitals from all 50 states
+The dataset from RAND describes how much private insurers pay relative to the cost of Medicare (Medicare has a set algorithm for deciding payments, while private insurers negotiate separately with each hospital) and includes information on hospital location, hospital system, CMS 5-star rating, relative price for outpatient/inpatient services, etc. This dataset includes hospitals from all 50 states.
 
-Pitch for Analysis:
-a.	In 2020, RAND published their report on the “National Evaluation of Health Care Prices Paid by Private Health Plans”, looking at the discrepancy between what private insurers pay for healthcare plans versus what Medicare pays. The report includes aggregated information on payments for inpatient, outpatient, professional, and facility services costs from 120 self-insured employers in 3112 hospitals all around United States. For each hospital, the hospital system, quality (CMS’s overall hospital star ratings), relative prices of services, simulated Medicare prices (what Medicare would have paid for those same services provided by the private insurers) are given. The researchers used Medicare prices as a baseline for comparison because unlike private insurers, which must negotiate prices with different hospitals and hospital chains, the prices paid by Medicare are not based on negotiation but rather a preset formula considering a hospital’s case-mix, area of service etc. The thought behind this was so that the researchers would be able to see how much leverage a private insurer has in a certain area - in that it is likely that if there are many hospitals in a certain area, the ratio that privates pay to Medicare would be smaller.
-b.	The report highlights some findings, particularly in the sheer discrepancy of cost - private insurers spent $33.8 billion on healthcare claims, compared to $14.1 billion simulated cost by Medicare (~240% overall of what Medicare would have spent). The relative price of care has steadily increased in the years 2016 to 2018. However, if you choose to view the relative prices by state, there appears to be a lot of differences between the relative prices with some states going under 200% while others going above and over 325%.
-c.	After reading through these findings, I am interested in conducting my own analysis on this dataset. I would like to see whether there is a correlation between the density of hospitals (as measured by number of hospitals in a city, since we’re given addresses of these hospitals, and then perhaps expanding it via mapping the zip codes for each hospital to county level, if city level analysis creates too small subgroups) and the relative inpatient, outpatient, professional, and facility services. Perhaps, we would see that in places where there are many hospitals, there would be less discrepancy among what Medicare pays versus what private insurers pay. I would also like to see if there is a correlation between density of hospitals and star ratings, and I hypothesize that in places where there are more hospitals, the star rating would be higher.
-d.	Since we’re given complete addresses of the hospitals, I was also hoping to create a recreate the interactive map made by RAND to visualize the density of hospitals, by mapping the addresses to latitude and longitude.
-e.	I would like to explore the relationship between the other variables in the dataset and the relative price variables, and perhaps if there is a strong correlation, create a model to predict relative price.
+The dataset from NASHP has information about a hospital’s payer mix (Medicare Payer Mix, Commercial Payer Mix, Uninsured Payer Mix etc) from 2011-2019.
+
+Hospitals justify the frankly exuberant amount of money they charge private insurers
+by saying that they need to cover the cost of uninsured care. The thought behind this
+is that uninsured patients won't pay for their care and thus the hospital is not
+compensated for their services. Therefore, the hospital justifies charging those
+who can pay more. We are hoping to investigate whether this is really the case -
+and see if uninsured payer mix does indeed explain the higher cost a hospital charges
+private insurers relative to Medicare.
+
+Using This Repository
+============================
+This repository is best used via Docker. Docker builds an environment which contains all the software needed to the project.
+
+One Docker container is provided for both "production" and
+"development." To build it you will need to create a file called
+`.password` which contains the password you'd like to use for the
+rstudio user in the Docker container. Then you run:
+
+```
+docker build . --build-arg linux_user_pwd="$(cat .password)" -t 611
+```
+
+This will create a docker container. Users using terminal will be able to start an RStudio server by running:
+
+```
+docker run -v $(pwd):/home/rstudio/work\
+           -p 8787:8787\
+           -p 8888:8888\
+           -e PASSWORD="$(cat .password)"\
+           -it 611
+```
+
+You then visit http://localhost:8787 via a browser on your machine to
+access the machine and development environment. For the curious, we
+also expose port 8888 so that we can launch other servers from in the
+container.
+
+
+Project Organization
+====================
+There are currently only one product of this analysis.
+1) A report which has results
+
+In the terminal of R, you simply invoke:
+
+```
+make HospitalOutcomesReport_SophieShan.pdf
+```
