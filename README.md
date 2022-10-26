@@ -53,6 +53,5 @@ There are currently only one product of this analysis.
 In the terminal of R, you simply invoke:
 
 ```
-cd work
 make HospitalOutcomesReport_SophieShan.pdf
 ```
