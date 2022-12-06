@@ -6,6 +6,7 @@ setwd("~/work")
 #load libraries
 library(readxl)
 library(tidyverse)
+library(factoextra)
 
 ################################################
 #read in the merged characteristics data
