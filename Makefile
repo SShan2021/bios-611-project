@@ -47,7 +47,7 @@ derived_data/merged_characteristics.csv\
 figures/hospital_ownership_type_medicare_star_rating_plot.pdf\
 figures/facility_type_medicare_star_rating_plot.pdf: .created-dirs \
 	code/join_nashp_rand.R \
-	derived_data/nashp_characteristics.csv \
+	derived_data/nashp_characteristics_2016.csv \
 	derived_data/rand_characteristics.csv 
 		Rscript code/join_nashp_rand.R
 		
