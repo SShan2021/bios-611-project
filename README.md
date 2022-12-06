@@ -6,15 +6,9 @@ This repository contains an analysis of data from RAND's National Evaluation of 
 
 The dataset from RAND describes how much private insurers pay relative to the cost of Medicare (Medicare has a set algorithm for deciding payments, while private insurers negotiate separately with each hospital) and includes information on hospital location, hospital system, CMS 5-star rating, relative price for outpatient/inpatient services, etc. This dataset includes hospitals from all 50 states.
 
-The dataset from NASHP has information about a hospital’s payer mix (Medicare Payer Mix, Commercial Payer Mix, Uninsured Payer Mix etc) from 2011-2019.
+The dataset from NASHP has information about a hospital’s payer mix (Medicare Payer Mix, Commercial Payer Mix, Uninsured Payer Mix etc) as well as other hospital characteristics such as bed size, location, hospital system, from 2011-2019.
 
-Hospitals justify the frankly exuberant amount of money they charge private insurers
-by saying that they need to cover the cost of uninsured care. The thought behind this
-is that uninsured patients won't pay for their care and thus the hospital is not
-compensated for their services. Therefore, the hospital justifies charging those
-who can pay more. We are hoping to investigate whether this is really the case -
-and see if uninsured payer mix does indeed explain the higher cost a hospital charges
-private insurers relative to Medicare.
+We seek to understand the kinds of hospitals by using characteristics data from both datasets. We hope to find patterns between types of hospitals that might explain distribution of uninsured and/or charity payer mix. 
 
 Using This Repository
 ============================
@@ -54,5 +48,5 @@ In the terminal of R, you simply invoke:
 
 ```
 cd work
-make HospitalOutcomesReport_SophieShan.pdf
+make HospitalValuesReport_SophieShan.pdf
 ```
