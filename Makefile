@@ -40,7 +40,7 @@ derived_data/rand_characteristics.csv: .created-dirs code/characteristics_rand.R
 		
 derived_data/charity_uninsured_care_data.csv: .created-dirs \
 	code/charity_uninsured_care.R \
-	derived_data/tidy_nashp.R
+	derived_data/tidy_nashp_2016_2018.csv
 		Rscript code/charity_uninsured_care.R
 		
 derived_data/merged_characteristics.csv\
