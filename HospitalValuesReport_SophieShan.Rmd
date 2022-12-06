@@ -1,0 +1,143 @@
+---
+title: "Hospital Values Report"
+author: "Sophie Shan"
+date: '2022-12-03'
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Introduction:
+There are an extraordinary amount of hospitals in the United States. Hospitals vary in the kind of patients they see, their Medicare star ratings, their compensation patterns. In this analysis, we seek to combine information found in RAND's National Evaluation of Health Care Prices Paid by Private Health Plans Dataset (https://rand.org/pubs/research_reports/RR4394.html) and NASHP's (National Academy for State Health Policy) Hospital Cost Tool's April 2022 Dataset (https://d3g6lgu1zfs2l4.cloudfront.net/) to understand similaries and differences between hospital characteristics and to investigate whether these characteristics are predictive of a hospital's uninsured and/or charity care payer mix (the percentage of a hospital's total care that belongs in the unisured or charity care category).
+
+# Data Cleaning and Visualization:
+
+## NASHP dataset 
+We start with the NASHP dataset which encompasses the years 2011-2019. In this dataset, we start with 5045 unique hospitals. We then subset the table so that all we're looking at is year 2016-2018 because those are the years that are covered by the RAND dataset. Now, we are left with 4723 hospitals which have at least one fiscal year between 2016-2018. As we take a closer look at the columns of the NASHP dataset, we see that for some hospitals, they appear to have fiscal years that start and end way earlier than the customary 364 to 365 days (as shown in Figure 1).
+
+![Strange Fiscal Years](./figures/nashp_strangefiscalyear.pdf){height=250}
+
+This definitely will require digging into (but not as part of this analysis), as there 522 out of the 4723 (~11%) of hospitals in this dataset. For the sake of this analysis, we decided to only use hospitals for which there are "normal" fiscal years in the 2016-2018 time period so that the characteristics we extract from the hospitals are standardized across the time period. We also decided to exclude hospitals that were in the District of Columbia (DC). There are 4186 unique hospitals in the filtered 2016-2018 dataset. Below, whenever I mention the dataset below, it will be unique to the 2016-2018, not-DC dataset. 
+
+Unlike RAND, the NASHP dataset gives us separate information for each year. I wanted to see if there is enough variability across years in the classification of each hospital, but as you see below, there isn't much difference between years. Therefore, instead of three separate clustering analyses, I performed one, and I selected 2016 because it had the most number of unique hospitals; there were 4183 (2016), 4176 (2017), and 4158 (2018) unique hospitals per year. 
+
+The majority of the hospital in the NASHP dataset are short term hospitals (70%) and the other 30% are critical access hospitals (which service mostly rural communities. This trend stays consistent across the years 2016-2018 (as shown in Figure 2). 
+
+![Facility Type](./figures/nashp_facility_type_plot.pdf){height=250}
+
+Hospitals which are critical access typically have less beds than the short term hospitals, which makes sense because of the different populations these kinds of hospitals serve (as shown in Figure 3). 
+
+![Bed Size Split by Facility Type](./figures/nashp_bed_size_plot.pdf){height=250}
+
+While there are hospitals from all of the 50 states, the majority of the hospitals are located in California and Texas - which is to be expected because those the states with the largest populations (as shown in Figure 4). 
+
+![Number of Hospitals in State](./figures/nashp_state_plot.pdf){height=250}
+
+There are a total of 583 health systems represented in our dataset, with some health systems of Augusta Health only having one hospital, while others like HCA Healthcare has 143 hospitals. The ownership type of the hospitals are non-profit (58%), government (23%), and for-profit (19%); as shown in Figure 5.  
+
+![Hospital Ownernship Type](./figures/nashp_hospital_ownership_type_plot.pdf){height=250}
+
+## RAND Dataset
+Our second dataset of interest is the RAND dataset which provides aggregate data for hospitals regarding a variety of expenditures across 2016-2018 (that is to say, there is only 1 row per hospital). After cleaning and filtering, there are 2876 hospitals in this dataset. The only variable of interest for this analysis is Medicare Star Rating (yearly scores given by Center for Medicare Services based on member satisfaction surveys, plans, health care providers). The Medicare Star Rating is on a scale of 1-5 where 4 stars and above is considered to be above average. The majority of the hospitals in this dataset are in the 3-star category (31.78%) and about 38% are in the 4+ star category. However, it seems promising that the distribution of star ratings seems to be normally distributed, as this is what we would expect (as shown in Figure 6).
+
+![Medicare Star Rating Distribution](./figures/rand_medicare_star_rating_plot.pdf){height=250}
+
+## Merged Dataset 
+After we perform an inner join the two cleaned datasets, we have a merged dataset with 2650 unique hospitals. We were curious about how the different characteristics from the NASHP dataset might interplay with the Medicare star rating. In regards to facility type, it's surprising that the greatest proportion (~20%) of critical access hospitals are four star hospitals, followed by three star hospitals (~13%) while less than 1% of the one star hospitals are critical access hospitals (as shown in Figure 7). 
+
+![Facility Type Split by Medicare Star Rating](./figures/facility_type_medicare_star_rating_plot.pdf){height=250}
+
+As for hospital ownership type, a greater proportion of one star (~28%) and two star (~30%) hospitals are for-profit compared the three star (~18%) and four star (13%) hospitals. Also of note is that governmental hospitals account for the lowest proportion in the five star hospitals (~8%) which is slightly counter-intuitive, as it is CMS who determines these rankings (as shown in Figure 8).
+
+![Hospital Ownership Type Split by Medicare Star Rating](./figures/hospital_ownership_type_medicare_star_rating_plot.pdf){height=250}
+
+# Analysis:
+
+We seek to cluster the characteristics that we've extracted from these datasets to see whether these hospitals are related to each other. First, we one-hot-encode the categorical variables and then perform Principle Component Reduction on the dataset because after dummy encoding, there are 600+ variables. We found that we can use the first 500 principle components to characterize this dataset , as these components explain about 95% of the variation in the data (as shown in Figure 9).
+
+![Cumulative Proportion of Variance Explained](./figures/pca_variance_plot.pdf){height=250}
+
+We first tried the k-means approach to clustering, and found that 2 was the optimal number of clusters using the silhouette graphic (as shown in Figure 10). 
+
+![Optimal Number of Cluster](./figures/k_means_silhouette_plot.pdf){height=250}
+
+However, when we visualized the clusters, we found that there is a ton of overlap between the two clusters, and that the data itself just doesn't appear to cluster in more than one group. Perhaps, this means that hospitals in this data behave similarly on the characteristics that I pulled out (as shown in Figure 11). 
+
+![K-Means Clustering](./figures/k_means_plot.pdf){height=250}
+
+I wanted to try Spectral Clustering before starting to manually remove variables from the dataset. I found a function online to create a dissimilarly matrix and imputted the eignvectors into the k-means clustering algorithm. However, as seen here, spectral clustering produced similar results as K-Means Clustering, where all the data points really clump together in one cluster (as shown in Figure 12). 
+
+![Spectral Clustering](./figures/spectral_clustering_plot.pdf){height=250}
+
+I figured that I could restrict the characteristics to the ones that I thought might lead to a more conclusive clustering, so I only kept the variables facility_type, hospital_ownernship_type, bed_size, and medicare_star_rating. I decided to keep 7 out of the 8 components found in PCA because it explained about 95% of the variation in the dataset. I used 9 clusters for the k-means based on the silhouette plot, and found this to be the result of my clustering. While the clusters don't appear to be distinct, at least they aren't as overlapping as the ones I previously found (as shown in Figure 13).
+
+![K-Means Clustering on Reduced Data](./figures/k_means_plot_reduceddata.pdf){height=250}
+
+I tried to understand what kind of hospitals make up each cluster. For hospital ownership type, it appears that cluster 1 is solely made up of non-profit and clusters 5 and 9 are solely made up of for-profit hospitals. Cluster 3 is only government hospitals (as shown in Figure 14).
+
+![Hospital Ownership Type by Cluster](./figures/hospital_ownership_type_cluster_plot.pdf){height=250}
+
+For medicare star rating, it appears that cluster 4 is made up of only four star hospitals and clusters 8 and 9 are made up of only two star hospitals. Cluster 2 is made up of one star hospitals and there doesn't appear to be many one star hospitals in any of the other clusters (with the exception of a few in cluster 6); as shown in Figure 15. 
+
+![Medicare Star Rating by Cluster](./figures/medicare_star_rating_cluster_plot.pdf){height=250}
+
+For facility type, it appears that the majority of the critical access hospitals are in cluster 7 with a small minority in cluster 9. Since cluster 9 is solely made up of for-profit hospitals, it does seem a littly surprising that there are for-profit critical access hospitals, but for the main part, they are general and specialty hospitals (as shown in Figure 16). 
+
+![Facility Type by Cluster](./figures/facility_type_cluster_plot.pdf){height=250}
+
+In regards to bed size, Cluster 6 stands out in particular, as the median bed size is close to 900 while the others hover around 150. Cluster 7 has the lowest number of beds (around 25), which is expected because as shown above, cluster 7 represents the majority of the critical access hospitals. We see this information displayed in Figure 17. 
+
+![Bed Size by Cluster](./figures/bed_size_cluster_plot.pdf){height=250}
+
+
+I summarized the information provided by these plots in a table below. 
+\begin{center}
+\begin{tabular}{||c c c c c||} 
+ \hline
+ Cluster & Hospital Ownership Type & Medicare Star Rating & Facility Type & Bed Size (Median) \\ [0.5ex] 
+ \hline\hline
+ 1 & Non-Profit & 3,5 & Short Term & 159\\ 
+ \hline
+ 2 & All & 1 & Short Term & 262\\
+ \hline
+ 3 & Government & 3,4,5 & Short Term & 100\\
+ \hline
+ 4 & For-Profit,Non-Profit & 4 & Short Term & 148\\
+ \hline
+ 5 & For-Profit & 3,5 & Short Term & 109\\ 
+ \hline
+ 6 & All & All & Short Term & 835\\ 
+ \hline
+ 7 & All & 2,3,4,5 & Critical Access & 25\\ 
+ \hline
+ 8 & Government,Non-Profit & 2 & Short Term & 202\\ 
+ \hline
+ 9 & For-Profit & 2 & Short Term & 162\\ [1ex] 
+ \hline
+\end{tabular}
+\end{center}
+
+I was also interested in perhaps seeing how these clusters might predict charity care and/or uninsured payer mix.
+
+There doesn't appear to be much differences in the distribution of uninsured payer mix in the different clusters. The cluster with the greatest amount of uninsured payer mix is cluster 3, which as defined by the chart above is owned by government, has above average to above average medicare star rating, and has a median bed size of around 100 The clusters with the lowest relative uninsured payer mix are 4 and 6. What stands out about cluster 6 is that these hospitals have an extremely large bed size, with a median of 835. For cluster 4, it appears that there are no government hospitals in the cluster, and for cluster 6, there are also hardly any government owned hospitals in the cluster. Perhaps, there is might be a relationship between government ownership and uninsured payer mix (as shown in Figure 18). 
+
+![Uninsured Payer Mix By Cluster](./figures/uninsured_payer_mix_plot.pdf){height=250}
+
+As shown in Figure 19, there doesn't appear to be much of a story in regards in charity care payer mix. Perhaps, for cluster 1, the 75th quantile of boxplot appears encompass higher values than the other clusters, and when we see that cluster 1 is made up of non-profit, average to above average hospitals, this starts to make sense. Cluster 7, appears to have the lowest amount of charity care, with outliers very close to the boxplot, and this makes sense because cluster 7 is made up of critical access hospitals which probably don't have the resources for charity care. 
+
+![Charity Care Payer Mix By Cluster](./figures/charity_care_payer_mix_plot.pdf){height=250}
+
+# Conclusion: 
+
+It appears that there are similarities between hospitals and those characteristics do cluster into several distinct groups. Through this analysis, we have found that critical access hospitals are rather similar to each other, hospitals with huge bed sizes are similar to each other, and government owned hospitals are similar to each other. 
+
+We have also found that there does appear to be a relationship between government ownership and uninsured payer mix that bears investigating. The cluster with only government-owned hospitals had the highest ratio of uninsured payer mix. It might be of interest to note that these hospitals also had average or above average medicare star rating. However, for clusters with a lower number of government hospitals, the uninsured payer mix decreases. The cluster with the largest median bed size also had a lower uninsured payer mix. 
+
+In regards to charity care payer mix, there doesn't appear to be much of relationship between the cluster makeup and charity care payer mix. The cluster with non-profit hospitals does appear to have a slightly higher charity care payer mix than the other clusters, while the cluster solely made up of critical access hospitals had the relatively least charity care. 
+
+
